@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ItsATest</title>
+    <title>Rachel Krupnick</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,6 +11,18 @@
   </head>
 
   <body>
+    <header>
+      <div>
+        <%= link_to "Rachel Krupnick", '#', id: "logo" %>
+        <nav>
+          <ul>
+            <li><%= link_to "Home", "#" %></li>
+            <li><%= link_to "Contact", "#" %></li>
+            <li><%= link_to "Blog", "#" %></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
     <%= yield %>
   </body>
 </html>
