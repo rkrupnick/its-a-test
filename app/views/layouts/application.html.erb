@@ -12,18 +12,7 @@
   </head>
 
   <body>
-    <header>
-      <div>
-        <%= link_to "Rachel Krupnick", '#', id: "logo" %>
-        <nav>
-          <ul>
-            <li><%= link_to "Home", "#" %></li>
-            <li><%= link_to "Contact", "#" %></li>
-            <li><%= link_to "Blog", "#" %></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
+    <%= render 'layouts/header' %>
     <%= yield %>
   </body>
 </html>
