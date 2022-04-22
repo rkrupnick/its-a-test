@@ -32,15 +32,17 @@ class ArticlesController < ApplicationController
     
     def update
         respond_to do |format|
-            format.html { redirect_to article_url(@article), 
-            notice: "Article was successfully updated." }
-            format.json { render :show, status: :ok,
-            location: @article }
-        else
-            format.html { render :edit, status:
-            :unprocessable_entity }
-            format.json { render json: @article.errors, 
-            status: :unprocessable_entity }
+            if @article.update(article_params)
+                format.html { redirect_to article_url(@article), 
+                notice: "Article was successfully updated." }
+                format.json { render :show, status: :ok,
+                location: @article }
+            else
+                format.html { render :edit, status:
+                :unprocessable_entity }
+                format.json { render json: @article.errors, 
+                status: :unprocessable_entity }
+            end
         end
     end
     
@@ -60,7 +62,7 @@ class ArticlesController < ApplicationController
         @article = Article.find(params[:id])
     end
 
-    def article_parama
+    def article_params
         params.require(:article).permit(:title,
         :content, :published_date)
     end
