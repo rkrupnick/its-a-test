@@ -1,4 +1,4 @@
 class Article < ApplicationRecord
-  validates :content, presence: true
+  validates :content, :title, presence: true
   has_rich_text :content
 end
