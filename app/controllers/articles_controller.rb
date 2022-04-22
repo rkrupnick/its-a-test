@@ -1,11 +1,11 @@
 class ArticlesController < ApplicationController
-    
+    before_action :set_article, only: %i[ show edit update destroy ]
+
     def index
         @articles = Article.all
     end
 
     def show
-        @article = Article.find(:id)
     end
     
     def new
@@ -14,22 +14,33 @@ class ArticlesController < ApplicationController
     
 
     def create 
-        article = Article.create! params.require(:article).permit(:title, :content)
-        redirect_to article
+         @article = Article.new(article_params)
+
+        respond_to do |format|
+            if @article.save
+                format.html { redirect_to article_url(@article), notice: "Article was successfully created." }
+                format.json { render :show, status: :created, location: @article }
+            else
+                format.html { render :new, status: :unprocessable_entity }
+                format.json { render json: @article.errors, status: :unprocessable_entity }
+            end
+        end
     end
 
     def edit
-        @article = Article.find(:id)
     end
     
     def update
-        @article = Article.find(params[:id])
-        if @article.update_attributes(params[:article])
-          flash[:success] = "Article was successfully updated"
-          redirect_to @article
+        respond_to do |format|
+            format.html { redirect_to article_url(@article), 
+            notice: "Article was successfully updated." }
+            format.json { render :show, status: :ok,
+            location: @article }
         else
-          flash[:error] = "Something went wrong"
-          render 'edit'
+            format.html { render :edit, status:
+            :unprocessable_entity }
+            format.json { render json: @article.errors, 
+            status: :unprocessable_entity }
         end
     end
     
@@ -44,4 +55,13 @@ class ArticlesController < ApplicationController
         end
     end
     
+    private 
+    def set_article
+        @article = Article.find(params[:id])
+    end
+
+    def article_parama
+        params.require(:article).permit(:title,
+        :content, :published_date)
+    end
 end
